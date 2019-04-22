@@ -1,21 +1,38 @@
 package com.ajordon.rest.webservices.restfulwebservices.user;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
+@Entity
 public class User {
 
-    private Integer id;
-    private String name;
-    private Date birtDate;
+    @Id
+    @GeneratedValue
+    private Long id;
 
+    @Size(min = 2, message = "Name should have atleast 2 characters.")
+    private String name;
+
+    @Past
+    private Date birthdate;
+
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
     public User() {
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -27,17 +44,24 @@ public class User {
         this.name = name;
     }
 
-    public Date getBirtDate() {
-        return birtDate;
+    public Date getBirthdate() {
+        return birthdate;
     }
 
-    public void setBirtDate(Date birtDate) {
-        this.birtDate = birtDate;
+    public void setBirthdate(Date birthdate) {
+        this.birthdate = birthdate;
+    }
+    public List<Post> getPosts() {
+        return posts;
     }
 
-    public User(Integer id, String name, Date birtDate) {
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public User(Long id, String name, Date birtdate) {
         this.id = id;
         this.name = name;
-        this.birtDate = birtDate;
+        this.birthdate = birtdate;
     }
 }
